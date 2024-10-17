@@ -1,5 +1,5 @@
 # Pokedex
  >Recurso utilizado desde https://pokeapi.co
 
-[!TIP]
+>[!TIP]
 >Practica de renderizacion de componentes
