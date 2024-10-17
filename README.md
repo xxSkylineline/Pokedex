@@ -1,2 +1,5 @@
 # Pokedex
- Apartado para empezar a utilizar nuevas herramientas en JavaScript 
+ >Recurso utilizado desde https://pokeapi.co
+
+[!TIP]
+>Practica de renderizacion de componentes
