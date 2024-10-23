@@ -34,3 +34,17 @@ export function crearTarjetaPokemon(nombrePokemon, indice, fotoPokemon) {
 }
 
 export async function crearPaginas(paginaSiguiente){
+    const link = await paginaSiguiente
+    const $contenedorDePaginacion = document.createElement('li')
+    $contenedorDePaginacion.setAttribute('class','page-item');
+
+    document.querySelector('#box-paginas').appendChild($contenedorDePaginacion);
+    console.log(link)
+    const $pagina = document.createElement('a');
+    $pagina.setAttribute('class', 'page')
+    $pagina.href = link
+    $pagina.textContent = '1'
+    $contenedorDePaginacion.appendChild($pagina)
+
+
+}
