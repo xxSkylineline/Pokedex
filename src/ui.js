@@ -33,3 +33,4 @@ export function crearTarjetaPokemon(nombrePokemon, indice, fotoPokemon) {
   ;
 }
 
+export async function crearPaginas(paginaSiguiente){
