@@ -42,5 +42,40 @@ export async function crearTarjetaEstadisticasPokemon(fotoPokemon, nombre){
   const $cuerpoTarjeta = crearTarjeta()
   $tarjetaPokemon.appendChild($cuerpoTarjeta)
 
+  let cuerpoTarjeta = document.querySelector('.card')
+  let nombrePokemon = crearTarjetaTitulo(nombre);
+  cuerpoTarjeta.appendChild(nombrePokemon);
 
+  
+  let imagenPokemon = crearImagen(fotoPokemon);
+
+  cuerpoTarjeta.appendChild(imagenPokemon)
+
+}
+
+
+function crearTarjeta(){
+
+  let $cuadroPokemon = document.createElement("div");
+  $cuadroPokemon.setAttribute("class", "card text-center");
+  $cuadroPokemon.style.width = "18rem";
+
+  return $cuadroPokemon
+}
+
+function crearImagen(nombrePokemon){
+  let $imagenTarjeta = document.createElement("img");
+  $imagenTarjeta.setAttribute("class", "card-img-top");
+  $imagenTarjeta.setAttribute('src', `${nombrePokemon}`);
+
+  return $imagenTarjeta;
+}
+
+function crearTarjetaTitulo(nombrePokemon){
+
+  let $tarjetaTitulo = document.createElement("h5");
+  $tarjetaTitulo.setAttribute("class", "card-text");
+  $tarjetaTitulo.textContent = nombrePokemon;
+
+  return $tarjetaTitulo;
 }
