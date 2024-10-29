@@ -30,10 +30,17 @@ export async function crearPagina(paginaSiguiente, numeroDePagina){
     document.querySelector('#box-paginas').appendChild($contenedorDePaginacion);
     console.log(link)
     const $pagina = document.createElement('a');
-    $pagina.setAttribute('class', 'page')
-    $pagina.href = link
-    $pagina.textContent = '1'
-    $contenedorDePaginacion.appendChild($pagina)
+    $pagina.setAttribute('class', 'page-link')
+    $pagina.dataset.link = await link;
+    $pagina.textContent = numeroDePagina;
+    $contenedorDePaginacion.appendChild($pagina);
+}
+
+
+export async function crearTarjetaEstadisticasPokemon(fotoPokemon, nombre){
+  const $tarjetaPokemon = document.querySelector('#tarjeta-pokemon')
+  const $cuerpoTarjeta = crearTarjeta()
+  $tarjetaPokemon.appendChild($cuerpoTarjeta)
 
 
 }
