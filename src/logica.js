@@ -37,3 +37,30 @@ export async function crearBotonesDePaginas() {
   }
 }
 
+export function mostrarEstadisticasPokemon(e) {
+  let $botonEstadisticas = e;
+
+  if ($botonEstadisticas.classList.contains("boton-estadisticas")) {
+    let $tarjetaPokemon = document.querySelector("#tarjeta-pokemon");
+    let nombrePokemon = $botonEstadisticas.dataset.nombrePokemon;
+    $tarjetaPokemon.textContent = "";
+   
+    traerDatosPokeapi(url_pokeApi + nombrePokemon).then((res) => {
+      const pokemonData = {
+        nombre: res.name,
+        tipo: [],
+        altura: res.height,
+        peso: res.weight,
+        imagen: res.sprites.other.dream_world.front_default,
+        habilidades: [],
+      };
+
+      res.types.forEach((tipo) => {
+        pokemonData.tipo.push(tipo.type.name);
+      });
+
+      console.log(pokemonData);
+      crearTarjetaEstadisticasPokemon(pokemonData);
+    });
+  }
+}
