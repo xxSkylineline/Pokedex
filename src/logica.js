@@ -23,3 +23,17 @@ export async function mostrarPokemones(link) {
     console.error("Error al requerir una respuesta:", error);
   }
 }
+
+export async function crearBotonesDePaginas() {
+  let link = await traerDatosPokeapi(url_pokeApi);
+  let pagina = await link.next;
+  let numeroDePagina = 1;
+  while (pagina != null) {
+    crearPagina(pagina, numeroDePagina);
+
+    link = await traerDatosPokeapi(pagina);
+    pagina = await link.next;
+    numeroDePagina += 1;
+  }
+}
+
