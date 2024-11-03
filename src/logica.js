@@ -13,7 +13,6 @@ export async function mostrarPokemones(link) {
   try {
     const res = await traerDatosPokeapi(link);
 
-    console.log(res.results.length);
     for (let i = 0; i < Object.keys(res.results).length; i++) {
       const nombrePokemon = res.results[i].name;
 
@@ -24,9 +23,9 @@ export async function mostrarPokemones(link) {
   }
 }
 
-export async function crearBotonesDePaginas() {
+export async function crearBotonesDePaginas(endpoint) {
   let link = await traerDatosPokeapi(url_pokeApi);
-  let pagina = await link.next;
+  let pagina = url_pokeApi + endpoint;
   let numeroDePagina = 1;
   while (pagina != null) {
     crearPagina(pagina, numeroDePagina);
@@ -37,21 +36,22 @@ export async function crearBotonesDePaginas() {
   }
 }
 
-export function mostrarEstadisticasPokemon(e) {
+export async function mostrarEstadisticasPokemon(e) {
   let $botonEstadisticas = e;
 
   if ($botonEstadisticas.classList.contains("boton-estadisticas")) {
     let $tarjetaPokemon = document.querySelector("#tarjeta-pokemon");
     let nombrePokemon = $botonEstadisticas.dataset.nombrePokemon;
     $tarjetaPokemon.textContent = "";
-   
-    traerDatosPokeapi(url_pokeApi + nombrePokemon).then((res) => {
+
+    try {
+      const res = await traerDatosPokeapi(url_pokeApi + nombrePokemon);
       const pokemonData = {
         nombre: res.name,
         tipo: [],
-        altura: res.height,
-        peso: res.weight,
-        imagen: res.sprites.other.dream_world.front_default,
+        altura: conversionDeDatos(res.height, "M", 10),
+        peso: conversionDeDatos(res.weight, "Kg", 10),
+        imagen: controlDeImagen(res),
         habilidades: [],
       };
 
@@ -59,8 +59,33 @@ export function mostrarEstadisticasPokemon(e) {
         pokemonData.tipo.push(tipo.type.name);
       });
 
-      console.log(pokemonData);
+      res.moves.forEach((movimiento) => {
+        pokemonData.habilidades.push(movimiento.move.name);
+      });
+
       crearTarjetaEstadisticasPokemon(pokemonData);
-    });
+    } catch (error) {
+      console.log(
+        "Se ha producido un error tratando de obtener las estadisticas del pokemon seleccionado",
+        error
+      );
+    }
   }
+}
+
+function conversionDeDatos(entrada, tipo, conversor) {
+  let resultadoConversion = entrada / conversor;
+
+  resultadoConversion = resultadoConversion + " " + tipo;
+
+  return resultadoConversion;
+}
+
+function controlDeImagen(imagenApi) {
+  let imagenAverificar = imagenApi.sprites.other.dream_world.front_default;
+  if (imagenAverificar == null) {
+    imagenAverificar = imagenApi.sprites.other.home.front_default;
+  }
+
+  return imagenAverificar;
 }
