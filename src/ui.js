@@ -28,7 +28,7 @@ export async function crearPagina(paginaSiguiente, numeroDePagina){
     $contenedorDePaginacion.setAttribute('class','page-item');
 
     document.querySelector('#box-paginas').appendChild($contenedorDePaginacion);
-    console.log(link)
+  
     const $pagina = document.createElement('a');
     $pagina.setAttribute('class', 'page-link')
     $pagina.dataset.link = await link;
@@ -37,19 +37,39 @@ export async function crearPagina(paginaSiguiente, numeroDePagina){
 }
 
 
-export async function crearTarjetaEstadisticasPokemon(fotoPokemon, nombre){
+export async function crearTarjetaEstadisticasPokemon(pokemon){
   const $tarjetaPokemon = document.querySelector('#tarjeta-pokemon')
   const $cuerpoTarjeta = crearTarjeta()
   $tarjetaPokemon.appendChild($cuerpoTarjeta)
 
   let cuerpoTarjeta = document.querySelector('.card')
-  let nombrePokemon = crearTarjetaTitulo(nombre);
+  let nombrePokemon = crearTarjetaTitulo(pokemon.nombre);
   cuerpoTarjeta.appendChild(nombrePokemon);
 
-  
-  let imagenPokemon = crearImagen(fotoPokemon);
+  let imagenPokemon = crearImagen(pokemon.imagen);
+  cuerpoTarjeta.appendChild(imagenPokemon);
 
-  cuerpoTarjeta.appendChild(imagenPokemon)
+   let tipoPokemon= '';
+  Object.values(pokemon.tipo).forEach(tipo => {
+    tipoPokemon= tipoPokemon + tipo + ' '
+  })
+  
+  let tablaTipoPokemon = crearTablaInfoPokemon('TIPO',tipoPokemon);
+  cuerpoTarjeta.appendChild(tablaTipoPokemon);
+
+  let tablaAltura = crearTablaInfoPokemon('Altura', pokemon.altura);
+  cuerpoTarjeta.appendChild(tablaAltura);
+
+  let tablaPeso = crearTablaInfoPokemon('Peso', pokemon.peso)
+  cuerpoTarjeta.appendChild(tablaPeso)
+
+  let movimientosPokemon= '';
+  Object.values(pokemon.habilidades).forEach(habilidad => {
+    movimientosPokemon = movimientosPokemon + habilidad + ' / ';
+  })
+  
+  let tablaHabilidades = crearTablaInfoPokemon('Habilidades', movimientosPokemon)
+  cuerpoTarjeta.appendChild(tablaHabilidades)
 
 }
 
@@ -78,4 +98,45 @@ function crearTarjetaTitulo(nombrePokemon){
   $tarjetaTitulo.textContent = nombrePokemon;
 
   return $tarjetaTitulo;
+}
+
+function crearTabla(){
+  let tabla= document.createElement('table');
+  return tabla;
+}
+
+function crearFilaTabla(){
+  let fila = document.createElement('tr');
+  fila.setAttribute('class', 'bg-danger text-white');
+  return fila;
+}
+
+function crearCeldaTabla(){
+  let celda = document.createElement('td');
+  celda.setAttribute('class', 'rounded-3')
+  return celda
+}
+
+function crearTablaInfoPokemon(encabezadoPokemon, descripcionPokemon){
+
+  let $contenedorTabla = crearTabla();
+  let $contenedorFilaNombre = crearFilaTabla();
+  let $contenedorCeldaNombre = crearCeldaTabla()
+
+  $contenedorCeldaNombre.textContent = encabezadoPokemon;
+
+  $contenedorTabla.appendChild($contenedorFilaNombre);
+  $contenedorFilaNombre.appendChild($contenedorCeldaNombre);
+
+  let $contenedorFilaDescripcion = crearFilaTabla();
+  $contenedorFilaDescripcion.setAttribute('class', 'bg-light')
+
+  let $contenedorCeldaDescripcion = crearCeldaTabla();
+
+  $contenedorCeldaDescripcion.textContent = descripcionPokemon;
+
+  $contenedorTabla.appendChild($contenedorFilaDescripcion);
+  $contenedorFilaDescripcion.appendChild($contenedorCeldaDescripcion)
+
+  return $contenedorTabla
 }
