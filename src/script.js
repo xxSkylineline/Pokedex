@@ -1,29 +1,31 @@
-import { traerFotoPokemon } from "./fetchData.js";
-import { crearTarjetaPokemon } from "./ui.js";
+import {
+  mostrarPokemones,
+  crearBotonesDePaginas,
+  mostrarEstadisticasPokemon,
+} from "./logica.js";
 
+function inicializar() {
+  crearBotonesDePaginas("?limit=20&offset=0");
+  
+}
 
-const url_pokeApi = 'https://pokeapi.co/api/v2/pokemon';
+inicializar();
 
-document.querySelector('#iniciar').addEventListener('click', async function () {
-    document.querySelector('#tarjeta-pokemon').textContent = ''
+let $botonesDePagina = document.querySelector("#box-paginas");
 
-    try {
-        const res = await fetch(url_pokeApi);
-        const data = await res.json();
+$botonesDePagina.onclick = function (e) {
+  let pagina = e.target;
 
-        for (let i = 0; i < Object.keys(data.results).length; i++) {
-            const nombrePokemon = data.results[i].name;
+  if (pagina.tagName == "A") {
+    let nuevaPagina = pagina.dataset.link;
+    console.log(nuevaPagina)
+    mostrarPokemones(nuevaPagina);
+  }
+};
 
-            const fotoPokemon = await traerFotoPokemon(nombrePokemon);
+let $botonesDeEstadisticas = document.querySelector("#tarjeta-pokemon");
 
-            crearTarjetaPokemon(nombrePokemon, i, fotoPokemon);
-            console.log(nombrePokemon);
-        }
-    } 
-    catch (error) {
-        console.error('Hubo un problema con la solicitud:', error);
-    }
-
-    
-})
-
+$botonesDeEstadisticas.onclick = function (e) {
+  let $botonesDeEstadisticas = e.target;
+  mostrarEstadisticasPokemon($botonesDeEstadisticas);
+};
