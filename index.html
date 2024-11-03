@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link
+      rel="stylesheet"
+      href="node_modules/bootstrap/dist/css/bootstrap.min.css"
+    />
+
+    <link
+      href="https://fonts.cdnfonts.com/css/pokemon-hollow"
+      rel="stylesheet"
+    />
+
+    <title>Pokedex!</title>
+  </head>
+
+  <body>
+    <header>
+      <img
+        alt="PokéAPI"
+        src="https://raw.githubusercontent.com/PokeAPI/media/master/logo/pokeapi_256.png"
+      />
+    </header>
+    <main>
+      <div id="paginacion" aria-label="Page navigation" class="container">
+        <ul class="pagination d-flex flex-wrap" id="box-paginas"></ul>
+      </div>
+
+      <div class="container">
+        <div class="bg-danger border border-dark border-3 rounded-3">
+          <div id="tarjeta-pokemon" class="row justify-content-center"></div>
+        </div>
+      </div>
+    </main>
+
+    <script type="module" src="./src/script.js"></script>
+  </body>
+</html>
