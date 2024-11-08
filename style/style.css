@@ -1,0 +1,16 @@
+@import url('https://fonts.cdnfonts.com/css/pokemon-solid');
+
+h1{
+font-family: 'pokemon Solid', 'sans-serif';
+font-size: 5rem;
+color: #ffee00bd;
+-webkit-text-stroke:  5px rgb(21, 118, 148);
+}
+
+.pokedex {
+  height: 500px;
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
